@@ -1,0 +1,140 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 101px;
+  position: relative;
+  overflow: hidden;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.titleLine1 {
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 900;
+  font-size: 82px;
+  line-height: 1.1;
+  color: #3d3d3d;
+  letter-spacing: -0.6px;
+  margin: 0;
+}
+
+.titleLine2 {
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 900;
+  font-size: 82px;
+  line-height: 1.1;
+  color: #ff0045;
+  letter-spacing: -0.6px;
+  margin: 0;
+}
+
+.subtitle {
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #8b8b8b;
+  text-align: center;
+  width: 486px;
+  margin-bottom: 40px;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 66px;
+}
+
+.cityButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 50px;
+  background-color: #ffffff;
+  border: 1px solid #ff0045;
+  border-radius: 6px;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #ff0045;
+  letter-spacing: -0.6px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.cityButton:hover {
+  background-color: #ffd2cc;
+  border-color: #b70055;
+}
+
+.cityButton:active {
+  background-color: #ffaba1;
+}
+
+.earthImage {
+  width: 430px;
+  height: 321px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.earthImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .titleLine1,
+  .titleLine2 {
+    font-size: 48px;
+  }
+
+  .subtitle {
+    width: 90%;
+    font-size: 14px;
+  }
+
+  .buttonGroup {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .earthImage {
+    width: 300px;
+    height: 224px;
+  }
+}
