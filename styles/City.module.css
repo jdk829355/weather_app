@@ -3,9 +3,32 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 43px 40px 60px;
+  padding-top: 101px; 
+  padding-bottom: 60px;
   position: relative;
   overflow: hidden;
+  margin: 0 auto
+}
+
+@media (min-width: 1280px) {
+  .container {
+    width: 1200px;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 1279px) {
+  .container {
+    width: 100%;
+    padding-left: 0;   
+    padding-right: 0;  
+  }
+}
+
+
+@media (max-width: 799px) {
+  .container {
+    width: 800px; 
+  }
 }
 
 .background {
@@ -232,6 +255,17 @@
   transition: transform 0.2s ease;
 }
 
+.toggleIcon::after {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid #FF0045;
+  border-bottom: 2px solid #FF0045;
+  transform: rotate(45deg);
+  margin-top: -3px;
+}
+
 .toggleIconOpen {
   transform: rotate(180deg);
 }
@@ -331,55 +365,4 @@
 
 .backLink:hover {
   text-decoration: underline;
-}
-
-@media (max-width: 768px) {
-  .container {
-    padding: 20px 16px 40px;
-  }
-
-  .headerTitle {
-    font-size: 28px;
-  }
-
-  .currentWeather {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-  }
-
-  .currentRight {
-    align-items: flex-start;
-  }
-
-  .currentTemp {
-    font-size: 36px;
-  }
-
-  .currentCity {
-    font-size: 24px;
-  }
-
-  .forecastHeaderTitle,
-  .dayHeader {
-    font-size: 24px;
-  }
-
-  .hourlyItem {
-    padding: 0 20px;
-    height: auto;
-    min-height: 90px;
-  }
-
-  .hourlyTime {
-    font-size: 20px;
-  }
-
-  .hourlyTemp {
-    font-size: 20px;
-  }
-
-  .hourlyDescription {
-    font-size: 14px;
-  }
 }

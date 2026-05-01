@@ -1,25 +1,58 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
+import { useQuery } from '@apollo/client/react'
+import { gql } from '@apollo/client'
 import styles from '../styles/City.module.css'
-import { cities, mockWeatherData } from '../data/mockData'
+import { cities } from '../data/cityInfo'
+
+const WEATHER_QUERY = gql`
+  query WeatherPageData($city: String!) {
+    weatherPageData(city: $city) {
+      currentWeather {
+        date
+        temp
+        feels_like
+        description
+        wind_speed
+        humidity
+      }
+      dailyWeather {
+        date
+        hourlyWeather {
+          time
+          min_temp
+          max_temp
+          description
+          icon
+        }
+      }
+      city
+      country
+      population
+    }
+  }
+`
 
 export default function CityPage({ city }) {
-  const data = mockWeatherData[city]
+  const { data, loading, error } = useQuery(WEATHER_QUERY, {
+    variables: { city: city },
+  })
+  
   const [openDays, setOpenDays] = useState({ 0: true })
-
+  
   const toggleDay = (index) => {
     setOpenDays((prev) => ({
       ...prev,
       [index]: !prev[index],
     }))
   }
-
-  if (!data) {
+  
+  if (loading || error || !data) {
     return (
       <div className={styles.container}>
         <div className={styles.content}>
-          <p>City not found</p>
+          <p>{loading ? 'Loading...' : error ? 'Error loading data' : 'City not found'}</p>
           <Link href="/">
             <a className={styles.backLink}>← Back to main</a>
           </Link>
@@ -31,8 +64,8 @@ export default function CityPage({ city }) {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Weather Information for {data.name}</title>
-        <meta name="description" content={`Weather forecast for ${data.name}`} />
+        <title>Weather Information for {data.weatherPageData.city}</title>
+        <meta name="description" content={`Weather forecast for ${data.weatherPageData.city}`} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -46,7 +79,7 @@ export default function CityPage({ city }) {
             <img src={"/earth_image.png"} alt="Earth globe illustration" />
           </div>
           <h1 className={styles.headerTitle}>
-            Weather Information for {data.name}
+            Weather Information for {data.weatherPageData.city}
           </h1>
         </div>
 
@@ -60,24 +93,24 @@ export default function CityPage({ city }) {
               </span>
             </div>
             <div className={styles.currentInfo}>
-              <p className={styles.currentDate}>{data.current.date}</p>
+              <p className={styles.currentDate}>{data.weatherPageData.currentWeather.date}</p>
               <div className={styles.currentCityRow}>
                 <p className={styles.currentCity}>
-                  {data.name}, {data.country}
+                  {data.weatherPageData.city}, {data.weatherPageData.country}
                 </p>
                 <p className={styles.currentPopulation}>
-                  (인구수 : {data.population.toLocaleString()})
+                  (인구수 : {data.weatherPageData.population.toLocaleString()})
                 </p>
               </div>
             </div>
           </div>
           <div className={styles.currentRight}>
             <p className={styles.currentTemp}>
-              {data.current.temp.toFixed(2)}℃
+              {data.weatherPageData.currentWeather.temp.toLocaleString() + "℃"}
             </p>
             <p className={styles.currentDetail}>
-              Feels like {data.current.feelsLike.toFixed(2)}℃ {data.current.description} 풍속{' '}
-              {data.current.windSpeed}m/s 습도 {data.current.humidity}%
+              Feels like {data.weatherPageData.currentWeather.feels_like.toLocaleString() + "℃"} {data.weatherPageData.currentWeather.description} 풍속{' '}
+              {data.weatherPageData.currentWeather.wind_speed}m/s 습도 {data.weatherPageData.currentWeather.humidity}%
             </p>
           </div>
         </div>
@@ -87,7 +120,7 @@ export default function CityPage({ city }) {
             <h2 className={styles.forecastHeaderTitle}>5-day Forecast</h2>
           </div>
 
-          {data.forecast.map((day, index) => (
+          {data.weatherPageData.dailyWeather.map((day, index) => (
             <div key={day.date} className={styles.dayRow}>
               <button
                 className={styles.dayHeader}
@@ -98,14 +131,12 @@ export default function CityPage({ city }) {
                   className={`${styles.toggleIcon} ${
                     openDays[index] ? styles.toggleIconOpen : ''
                   }`}
-                >
-                  ▼
-                </span>
+                />
               </button>
 
               {openDays[index] && (
                 <div className={styles.hourlyList}>
-                  {day.hourly.map((hour) => (
+                  {day.hourlyWeather.map((hour) => (
                     <div key={hour.time} className={styles.hourlyItem}>
                       <div className={styles.hourlyLeft}>
                         <div className={styles.weatherIconSmall}>
@@ -122,7 +153,7 @@ export default function CityPage({ city }) {
                           {hour.description}
                         </p>
                         <p className={styles.hourlyTemp}>
-                          {hour.temp.toFixed(2)}℃ / {hour.tempMax.toFixed(2)}℃
+                          {hour.min_temp.toLocaleString() + "℃"} / {hour.max_temp.toLocaleString() + "℃"}
                         </p>
                       </div>
                     </div>

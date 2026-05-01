@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import styles from '../styles/Home.module.css'
-import { cities } from '../data/mockData'
+import {cities}  from '../data/cityInfo'
 
 
 export default function Home() {
