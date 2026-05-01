@@ -79,6 +79,8 @@ export const resolver = async (city) => {
         };
     }
 
+    console.log("currentWeatherData:", currentWeatherData);
+
     const currentWeather = {
         date: formatWeatherDate(formatDateTime(currentWeatherData.dt, timezoneOffset)).full,
         temp: currentWeatherData.main.temp,
@@ -86,6 +88,7 @@ export const resolver = async (city) => {
         description: currentWeatherData.weather[0].description,
         wind_speed: currentWeatherData.wind.speed,
         humidity: currentWeatherData.main.humidity,
+        icon: currentWeatherData.weather[0].icon,
     };
 
     const dailyWeatherMap = {};

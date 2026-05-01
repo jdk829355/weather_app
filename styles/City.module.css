@@ -48,6 +48,9 @@
 }
 
 .content {
+  display: block;
+  margin: 0;
+  padding: 0;
   position: relative;
   z-index: 1;
   width: 100%;
@@ -55,6 +58,9 @@
 }
 
 .header {
+  display: block;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -63,9 +69,11 @@
 }
 
 .headerImage {
+  display: block;
+  margin: 0 0 10px 0;
+  padding: 0;
   width: 68px;
   height: 51px;
-  margin-bottom: 10px;
 }
 
 .headerImage img {
@@ -75,6 +83,9 @@
 }
 
 .headerTitle {
+  display: block;
+  margin: 0;
+  padding: 0;
   font-family: 'Pretendard', sans-serif;
   font-weight: 900;
   font-size: 40px;
@@ -82,10 +93,12 @@
   color: #3d3d3d;
   letter-spacing: -0.6px;
   text-align: center;
-  margin: 0;
 }
 
 .currentWeather {
+  display: block;
+  margin: 0 0 27px 0;
+  padding: 0;
   width: 100%;
   background-color: #ffffff;
   border: 1px solid #dfdfdf;
@@ -94,7 +107,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 27px;
 }
 
 .currentLeft {
@@ -104,6 +116,9 @@
 }
 
 .weatherIconLarge {
+  display: block;
+  margin: 0;
+  padding: 0;
   width: 80px;
   height: 80px;
   background-color: #ffd2cc;
@@ -114,13 +129,10 @@
   flex-shrink: 0;
 }
 
-.weatherIconLarge span {
-  font-family: 'Pretendard', sans-serif;
-  font-weight: 700;
-  font-size: 13px;
-  line-height: 1.1;
-  color: #000000;
-  text-align: center;
+.weatherIconLarge img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .currentInfo {
@@ -190,6 +202,9 @@
 }
 
 .forecastContainer {
+  display: block;
+  margin: 0;
+  padding: 0;
   width: 100%;
   border: 1px solid #dfdfdf;
   border-radius: 6px;
@@ -197,6 +212,9 @@
 }
 
 .forecastHeader {
+  display: block;
+  margin: 0;
+  padding: 0;
   width: 100%;
   background-color: #ffffff;
   border-bottom: 1px solid #dfdfdf;
@@ -207,15 +225,20 @@
 }
 
 .forecastHeaderTitle {
+  display: block;
+  margin: 0;
+  padding: 0;
   font-family: 'Pretendard', sans-serif;
   font-weight: 700;
   font-size: 36px;
   line-height: 24px;
   color: #3d3d3d;
-  margin: 0;
 }
 
 .dayRow {
+  display: block;
+  margin: 0;
+  padding: 0;
   width: 100%;
   background-color: #ffffff;
   border-bottom: 1px solid #dfdfdf;
@@ -226,14 +249,23 @@
 }
 
 .dayHeader {
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
   width: 100%;
   padding: 28px 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  cursor: pointer;
   background-color: #ffffff;
-  border: none;
   font-family: 'Pretendard', sans-serif;
   font-weight: 700;
   font-size: 30px;
@@ -271,10 +303,17 @@
 }
 
 .hourlyList {
+  display: block;
+  list-style: none;
+  padding: 0;
+  margin: 0;
   width: 100%;
 }
 
 .hourlyItem {
+  list-style: none;
+  margin: 0;
+  padding: 0 50px;
   width: 100%;
   height: 110px;
   background-color: #ffffff;
@@ -282,7 +321,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 50px;
   position: relative;
 }
 
@@ -297,6 +335,9 @@
 }
 
 .weatherIconSmall {
+  display: block;
+  margin: 0;
+  padding: 0;
   width: 60px;
   height: 60px;
   background-color: #ffd2cc;
@@ -307,13 +348,10 @@
   flex-shrink: 0;
 }
 
-.weatherIconSmall span {
-  font-family: 'Pretendard', sans-serif;
-  font-weight: 700;
-  font-size: 10px;
-  line-height: 1.1;
-  color: #000000;
-  text-align: center;
+.weatherIconSmall img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .hourlyTime {

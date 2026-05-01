@@ -7,7 +7,10 @@ export default function HourlyWeatherList({ hourlyData }) {
         <li key={hour.time} className={styles.hourlyItem}>
           <div className={styles.hourlyLeft}>
             <figure className={styles.weatherIconSmall}>
-              <span>Weather<br />icon</span>
+              <img
+                src={`https://openweathermap.org/payload/api/media/file/${hour.icon}.png`}
+                alt=""
+              />
             </figure>
             <p className={styles.hourlyTime}>{hour.time}</p>
           </div>

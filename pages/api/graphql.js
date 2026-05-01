@@ -23,6 +23,7 @@ const typeDefs = gql`
         description: String
         wind_speed: Float
         humidity: Int
+        icon: String
     }
 
     type WeatherPageData {

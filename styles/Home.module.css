@@ -61,23 +61,27 @@
 }
 
 .titleLine1 {
+  display: block;
+  margin: 0;
+  padding: 0;
   font-family: 'Pretendard', sans-serif;
   font-weight: 900;
   font-size: 82px;
   line-height: 1.1;
   color: #3d3d3d;
   letter-spacing: -0.6px;
-  margin: 0;
 }
 
 .titleLine2 {
+  display: block;
+  margin: 0;
+  padding: 0;
   font-family: 'Pretendard', sans-serif;
   font-weight: 900;
   font-size: 82px;
   line-height: 1.1;
   color: #ff0045;
   letter-spacing: -0.6px;
-  margin: 0;
 }
 
 .subtitle {

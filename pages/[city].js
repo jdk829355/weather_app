@@ -17,6 +17,7 @@ const WEATHER_QUERY = gql`
         description
         wind_speed
         humidity
+        icon
       }
       dailyWeather {
         date
@@ -53,10 +54,10 @@ export default function CityPage({ city }) {
     return (
       <main className={styles.container}>
         <article className={styles.content}>
-          <p>{loading ? 'Loading...' : error ? 'Error loading data' : 'City not found'}</p>
           <Link href="/">
             <a className={styles.backLink}>← Back to main</a>
           </Link>
+          <p>{loading ? 'Loading...' : error ? 'Error loading data' : 'City not found'}</p>
         </article>
       </main>
     )
@@ -93,9 +94,10 @@ export default function CityPage({ city }) {
           <div className={styles.currentLeft}>
             <figure className={styles.weatherIconLarge}>
               <span>
-                Weather
-                <br />
-                icon
+                <img
+                src={`https://openweathermap.org/payload/api/media/file/${data.weatherPageData.currentWeather.icon}.png`}
+                alt=""
+              />
               </span>
             </figure>
             <div className={styles.currentInfo}>
