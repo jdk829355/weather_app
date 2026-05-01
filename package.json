@@ -13,9 +13,12 @@
     "apollo-server-micro": "^3.13.0",
     "axios": "^1.15.2",
     "graphql": "^16.13.2",
+    "micro": "^10.0.1",
     "next": "^12.3.7",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "rxjs": "^7.8.2",
+    "zen-observable": "^0.10.0"
   },
   "devDependencies": {
     "eslint": "10.2.1",

@@ -1,4 +1,4 @@
-export const resolver = async (city) => {
+export const resolver = async (city, clientTimeZone) => {
     const apiKey = process.env.OPENWEATHER_API_KEY;
     const cityToCoordinates = await import('../../data/cityInfo').then(module => module.cityToCoordinates);
     const {lat, lon} = cityToCoordinates[city];
@@ -58,10 +58,10 @@ export const resolver = async (city) => {
         return `${yyyy}-${mm}-${dd}T${hh}:${min}:${ss}${offset}`;
     }
 
-    function formatWeatherDate(isoString) {
+    function formatWeatherDate(isoString, timeZone) {
         const date = new Date(isoString);
 
-        const month = date.toLocaleString('en-US', { month: 'short' });
+        const month = date.toLocaleString('en-US', { month: 'short', timeZone });
         
 
         const day = String(date.getDate()).padStart(2, '0');
@@ -69,7 +69,8 @@ export const resolver = async (city) => {
         const time = date.toLocaleString('en-US', {
             hour: '2-digit',
             minute: '2-digit',
-            hour12: true
+            hour12: true,
+            timeZone,
         }).toLowerCase().replace(' ', '');
 
         return {
@@ -81,7 +82,7 @@ export const resolver = async (city) => {
 
 
     const currentWeather = {
-        date: formatWeatherDate(formatDateTime(currentWeatherData.dt, timezoneOffset)).full,
+        date: formatDateTime(currentWeatherData.dt, timezoneOffset),
         temp: currentWeatherData.main.temp,
         feels_like: currentWeatherData.main.feels_like,
         description: currentWeatherData.weather[0].description,
@@ -92,13 +93,17 @@ export const resolver = async (city) => {
 
     const dailyWeatherMap = {};
     for (const item of dailyData.list) {
-        const localTimeStr = formatWeatherDate(parseDtTxtToLocal(item.dt_txt, timezoneOffset)).timeOnly;
-        const dateStr = formatWeatherDate(parseDtTxtToLocal(item.dt_txt, timezoneOffset)).dateOnly;
+        const formattedDate = formatWeatherDate(
+            parseDtTxtToLocal(item.dt_txt, timezoneOffset),
+            clientTimeZone
+        );
+        const localTimeStr = formattedDate.timeOnly;
+        const dateStr = formattedDate.dateOnly;
         if (!dailyWeatherMap[dateStr]) {
             dailyWeatherMap[dateStr] = [];
         }
         dailyWeatherMap[dateStr].push({
-            time: localTimeStr,
+            time: item.dt_txt+timezoneOffset,
             min_temp: item.main.temp_min,
             max_temp: item.main.temp_max,
             description: item.weather[0].description,
