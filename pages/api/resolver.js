@@ -42,7 +42,8 @@ export const resolver = async (city) => {
         const hh = String(date.getUTCHours()).padStart(2, '0');
         const min = String(date.getUTCMinutes()).padStart(2, '0');
         const ss = String(date.getUTCSeconds()).padStart(2, '0');
-        const offset = formatTimezoneOffset(timezoneSeconds);
+        // const offset = formatTimezoneOffset(timezoneSeconds);
+        const offset = '+00:00';
         return `${yyyy}-${mm}-${dd}T${hh}:${min}:${ss}${offset}`;
     }
 

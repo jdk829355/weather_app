@@ -36,26 +36,6 @@ const WEATHER_QUERY = gql`
   }
 `
 
-const formatLocalDateTime = (isoString) => {
-  if (!isoString) {
-    return ''
-  }
-
-  const date = new Date(isoString)
-  const month = date.toLocaleString('en-US', { month: 'short' })
-  const day = String(date.getDate()).padStart(2, '0')
-  const time = date
-    .toLocaleString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true,
-    })
-    .toLowerCase()
-    .replace(' ', '')
-
-  return `${month} ${day}. ${time}`
-}
-
 export default function CityPage({ city }) {
   const { data, loading, error } = useQuery(WEATHER_QUERY, {
     variables: { city: city },
