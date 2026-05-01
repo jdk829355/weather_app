@@ -79,7 +79,6 @@ export const resolver = async (city) => {
         };
     }
 
-    console.log("currentWeatherData:", currentWeatherData);
 
     const currentWeather = {
         date: formatWeatherDate(formatDateTime(currentWeatherData.dt, timezoneOffset)).full,
