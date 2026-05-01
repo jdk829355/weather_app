@@ -1,4 +1,6 @@
-export const resolver = async (city, clientTimeZone) => {
+const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+export const resolver = async (city) => {
     const apiKey = process.env.OPENWEATHER_API_KEY;
     const cityToCoordinates = await import('../../data/cityInfo').then(module => module.cityToCoordinates);
     const {lat, lon} = cityToCoordinates[city];
@@ -58,31 +60,31 @@ export const resolver = async (city, clientTimeZone) => {
         return `${yyyy}-${mm}-${dd}T${hh}:${min}:${ss}${offset}`;
     }
 
-    function formatWeatherDate(isoString, timeZone) {
+    function formatWeatherDate(isoString) {
         const date = new Date(isoString);
+        const month = MONTH_NAMES[date.getUTCMonth()];
+        const day = String(date.getUTCDate()).padStart(2, '0');
 
-        const month = date.toLocaleString('en-US', { month: 'short', timeZone });
-        
+        let hours = date.getUTCHours();
+        const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+        const meridiem = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        if (hours === 0) {
+            hours = 12;
+        }
 
-        const day = String(date.getDate()).padStart(2, '0');
-
-        const time = date.toLocaleString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true,
-            timeZone,
-        }).toLowerCase().replace(' ', '');
+        const time = `${String(hours).padStart(2, '0')}:${minutes}${meridiem}`;
 
         return {
             full: `${month} ${day}. ${time}`,
             dateOnly: `${month} ${day}`,
-            timeOnly: time                
+            timeOnly: time
         };
     }
 
 
     const currentWeather = {
-        date: formatDateTime(currentWeatherData.dt, timezoneOffset),
+        date: formatWeatherDate(formatDateTime(currentWeatherData.dt, timezoneOffset)).full,
         temp: currentWeatherData.main.temp,
         feels_like: currentWeatherData.main.feels_like,
         description: currentWeatherData.weather[0].description,
@@ -93,17 +95,13 @@ export const resolver = async (city, clientTimeZone) => {
 
     const dailyWeatherMap = {};
     for (const item of dailyData.list) {
-        const formattedDate = formatWeatherDate(
-            parseDtTxtToLocal(item.dt_txt, timezoneOffset),
-            clientTimeZone
-        );
-        const localTimeStr = formattedDate.timeOnly;
-        const dateStr = formattedDate.dateOnly;
+        const localTimeStr = formatWeatherDate(parseDtTxtToLocal(item.dt_txt, timezoneOffset)).timeOnly;
+        const dateStr = formatWeatherDate(parseDtTxtToLocal(item.dt_txt, timezoneOffset)).dateOnly;
         if (!dailyWeatherMap[dateStr]) {
             dailyWeatherMap[dateStr] = [];
         }
         dailyWeatherMap[dateStr].push({
-            time: item.dt_txt+timezoneOffset,
+            time: localTimeStr,
             min_temp: item.main.temp_min,
             max_temp: item.main.temp_max,
             description: item.weather[0].description,
@@ -112,7 +110,8 @@ export const resolver = async (city, clientTimeZone) => {
     }
 
     const dailyWeather = Object.entries(dailyWeatherMap)
-        .sort(([a], [b]) => a.localeCompare(b))
+        // 날짜 기준으로 정렬
+        .sort(([a], [b]) => new Date(a) - new Date(b))
         .map(([date, hourlyWeather]) => ({
             date,
             hourlyWeather,

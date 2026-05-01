@@ -33,7 +33,7 @@ export default function HourlyWeatherList({ hourlyData }) {
                 alt=""
               />
             </figure>
-            <p className={styles.hourlyTime}>{formatLocalDateTime(hour.time).split(' ')[2]}</p>
+            <p className={styles.hourlyTime}>{hour.time}</p>
           </div>
           <div className={styles.hourlyRight}>
             <p className={styles.hourlyDescription}>{hour.description}</p>

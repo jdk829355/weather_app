@@ -122,7 +122,7 @@ export default function CityPage({ city }) {
             </figure>
             <div className={styles.currentInfo}>
               <p className={styles.currentDate}>
-                {formatLocalDateTime(data.weatherPageData.currentWeather.date)}
+                {data.weatherPageData.currentWeather.date}
               </p>
               <div className={styles.currentCityRow}>
                 <p className={styles.currentCity}>
