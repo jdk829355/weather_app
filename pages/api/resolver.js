@@ -2,7 +2,7 @@ import { cityToCoordinates } from '../../data/cityInfo';
 
 const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-export const resolver = async (city, clientTimeZone) => {
+export const resolver = async (city) => {
     const apiKey = process.env.OPENWEATHER_API_KEY;
     const {lat, lon} = cityToCoordinates[city];
     
@@ -15,15 +15,10 @@ export const resolver = async (city, clientTimeZone) => {
     const dailyUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
 
 
-    const requestHeaders = clientTimeZone
-        ? { 'x-timezone': clientTimeZone }
-        : undefined;
-
-    const fetchOptions = requestHeaders ? { headers: requestHeaders } : undefined;
 
     const promises = [
-        fetch(currentWeatherUrl, fetchOptions),
-        fetch(dailyUrl, fetchOptions)
+        fetch(currentWeatherUrl),
+        fetch(dailyUrl)
     ];
 
     const results = await Promise.all(promises); 

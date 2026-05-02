@@ -10,27 +10,8 @@ const httpLink = new HttpLink({
     : "http://localhost:3000/api/graphql",
 })
 
-const timezoneLink = setContext((_, { headers }) => {
-  if (typeof window === "undefined" || typeof Intl === "undefined") {
-    return { headers }
-  }
-
-  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
-
-  if (!timeZone) {
-    return { headers }
-  }
-
-  return {
-    headers: {
-      ...headers,
-      "x-timezone": timeZone,
-    },
-  }
-})
-
 const client = new ApolloClient({
-  link: from([timezoneLink, httpLink]),
+  link: httpLink,
   cache: new InMemoryCache(),
 })
 
