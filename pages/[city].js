@@ -36,6 +36,11 @@ const WEATHER_QUERY = gql`
   }
 `
 
+const HourlyWeatherList = dynamic(() => import('../components/hourlyForecast'), {
+    loading: () => <p style={{ padding: '20px', textAlign: 'center' }}>Loading hourly forecast...</p>,
+    ssr: false
+  });
+
 export default function CityPage({ city }) {
   const { data, loading, error } = useQuery(WEATHER_QUERY, {
     variables: { city: city },
@@ -62,11 +67,6 @@ export default function CityPage({ city }) {
       </main>
     )
   }
-
-  const HourlyWeatherList = dynamic(() => import('../components/hourlyForcast'), {
-    loading: () => <p style={{ padding: '20px', textAlign: 'center' }}>Loading hourly forecast...</p>,
-    ssr: false
-  });
 
   return (
     <main className={styles.container}>
