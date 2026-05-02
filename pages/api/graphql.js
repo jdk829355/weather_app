@@ -1,6 +1,6 @@
 import { ApolloServer, gql } from 'apollo-server-micro';
 import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
-import { resolver } from './resolver';
+import { resolver } from '../../lib/resolver';
 
 const typeDefs = gql`
     type HourlyWeather {
