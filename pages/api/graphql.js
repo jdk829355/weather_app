@@ -42,8 +42,8 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    weatherPageData: async (_, { city }) => {
-      return await resolver(city);
+    weatherPageData: async (_, { city }, context) => {
+      return await resolver(city, context?.clientTimeZone);
     }
   }
 };
@@ -51,6 +51,9 @@ const resolvers = {
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
+  context: ({ req }) => ({
+    clientTimeZone: req.headers['x-timezone'] || null,
+  }),
   plugins: [ApolloServerPluginLandingPageGraphQLPlayground()]
 });
 const startServer = apolloServer.start();
